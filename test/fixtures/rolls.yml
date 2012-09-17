@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  game_number: 1
+  dice1: 1
+  dice2: 1
+  total: 1
+
+two:
+  game_number: 1
+  dice1: 1
+  dice2: 1
+  total: 1

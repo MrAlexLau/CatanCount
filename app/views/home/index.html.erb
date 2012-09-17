@@ -1,0 +1,10 @@
+<h1>Catan Stats</h1>
+<%= form_tag("home/new_game", :method => "get") do %>
+  <%= submit_tag("New Game?") %>
+<% end %>
+<br /><br />
+<%= form_tag("home/existing_game", :method => "get") do %>
+	<%= label_tag(:game_id, "Existing game id:") %>
+  <%= text_field_tag(:game_id) %>
+  <%= submit_tag("Go") %>
+<% end %>

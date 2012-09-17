@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Game number:</b>
+  <%= @roll.game_number %>
+</p>
+
+<p>
+  <b>Dice1:</b>
+  <%= @roll.dice1 %>
+</p>
+
+<p>
+  <b>Dice2:</b>
+  <%= @roll.dice2 %>
+</p>
+
+<p>
+  <b>Total:</b>
+  <%= @roll.total %>
+</p>
+
+
+<%= link_to 'Edit', edit_roll_path(@roll) %> |
+<%= link_to 'Back', rolls_path %>
