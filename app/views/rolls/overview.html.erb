@@ -60,5 +60,18 @@
 	<h1>Game ID: <%= raw @game_id %> </h1>
 	<div id="chart1" style="max-width: 80%; min-height: 250px;"></div>
 	<%= render 'form' %>
+	
+	<br /><br /><br />
+	<h3>Rolls for this game (most recent first)</h3>
+	<table>
+	<% @rolls.each do |roll| %>
+	  <tr>
+	    <td class="roll_table_cell"><%= roll.total %></td>
+	    <td class="roll_table_cell"><%= link_to 'Destroy', roll, confirm: 'Are you sure?', method: :delete %></td>
+	  </tr>
+	<% end %>
+	</table>
+	<br />
+	Total rolls for this game: <%= @rolls.count %>
 </body>
 </html>

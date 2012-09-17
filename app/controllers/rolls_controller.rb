@@ -39,7 +39,7 @@ class RollsController < ApplicationController
   def overview
     @game_id = session[:game_id]
     
-    @actual_series, @expected_series = Roll.get_game_stats(@game_id)
+    @actual_series, @expected_series, @rolls = Roll.get_game_stats(@game_id)
     
     @roll = Roll.new
     @roll.game_number = @game_id

@@ -34,6 +34,10 @@
   background: #9CA5DB;
 	font-size: 15px;
 }
+
+.roll_table_cell{
+	height: 25px;
+}
 /*
 table{
 	.jqplot-table-legend{

@@ -30,7 +30,7 @@ class Roll < ActiveRecord::Base
       roll_percentages[i] = roll_percent / 100
     end
             
-    rolls_for_game = Roll.where("game_number = (?)", game_number)
+    rolls_for_game = Roll.where("game_number = (?)", game_number).order("created_at DESC")
     
     rolls_for_game.each do |roll|
       actual[roll.total - 2] += 1
@@ -44,6 +44,6 @@ class Roll < ActiveRecord::Base
     end
     
     
-    return actual, expected
+    return actual, expected, rolls_for_game
   end
 end
