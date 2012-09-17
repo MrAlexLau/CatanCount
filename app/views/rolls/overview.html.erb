@@ -67,7 +67,7 @@
 	<% @rolls.each do |roll| %>
 	  <tr>
 	    <td class="roll_table_cell"><%= roll.total %></td>
-	    <td class="roll_table_cell"><%= link_to 'Destroy', roll, confirm: 'Are you sure?', method: :delete %></td>
+	    <td class="roll_table_cell"><%= link_to 'Destroy', roll, method: :delete %></td>
 	  </tr>
 	<% end %>
 	</table>

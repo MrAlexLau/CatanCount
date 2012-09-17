@@ -96,8 +96,8 @@ class RollsController < ApplicationController
     @roll.destroy
 
     respond_to do |format|
-      format.html { redirect_to rolls_url }
-      format.json { head :no_content }
+      format.html { redirect_to rolls_overview_path, notice: 'Roll was deleted.' }
+      format.json { render json: rolls_overview_path, status: :created, location: @roll }
     end
   end
   
