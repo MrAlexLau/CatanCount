@@ -58,6 +58,25 @@
 </head>
 <body>
 	<h1>Game ID: <%= raw @game_id %> </h1>
+	
+	<table>
+		<tr>
+			<td>
+				Expected Values
+			</td>
+			<td class="legend_cell expected">
+				&nbsp;
+			</td>	 
+		</tr>
+		<tr>
+			<td>
+				Actual Values
+			</td>
+			<td class="legend_cell actual">
+				&nbsp;
+			</td>	 
+		</tr>
+	</table>
 	<div id="chart1" style="max-width: 80%; min-height: 250px;"></div>
 	<%= render 'form' %>
 	
