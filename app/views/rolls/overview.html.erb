@@ -67,8 +67,7 @@
 			<td class="legend_cell expected">
 				&nbsp;
 			</td>	 
-		</tr>
-		<tr>
+			<td>&nbsp;</td>
 			<td>
 				Actual Values
 			</td>
@@ -81,8 +80,9 @@
 	<%= render 'form' %>
 	
 	<br /><br /><br />
-	<h3>Rolls for this game (most recent first)</h3>
+	<h3> <%= @rolls.count %> rolls for this game (most recent first)</h3>
 	<table>
+	<%= will_paginate @rolls %>
 	<% @rolls.each do |roll| %>
 	  <tr>
 	    <td class="roll_table_cell"><%= roll.total %></td>
@@ -91,7 +91,5 @@
 	  </tr>
 	<% end %>
 	</table>
-	<br />
-	Total rolls for this game: <%= @rolls.count %>
 </body>
 </html>

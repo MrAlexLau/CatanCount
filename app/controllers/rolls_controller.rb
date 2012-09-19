@@ -39,10 +39,14 @@ class RollsController < ApplicationController
   def overview
     @game_id = session[:game_id]
     
-    @actual_series, @expected_series, @rolls = Roll.get_game_stats(@game_id)
+    @actual_series, @expected_series = Roll.get_game_stats(@game_id)
+    
+    @rolls = Roll.where("game_number = (?)", @game_id).paginate(:page => params[:page], :per_page => 10).order("created_at DESC")
+    #@rolls = @rolls
     
     @roll = Roll.new
     @roll.game_number = @game_id
+    
 
     respond_to do |format|
       format.html # overview.html.erb
