@@ -6,6 +6,8 @@
 
 	<script type="text/javascript">
 		$(document).ready(function(){
+				$(".next_page").html("Older >");
+				$(".previous_page").html("< Newer");
 		    var s1 = <%= raw @expected_series.to_json %>;
 		    var s2 = <%= raw @actual_series.to_json %>;
 				    
@@ -83,14 +85,14 @@
 	<br /><br /><br />
 	<h3> <%= @rolls.count %> rolls for this game (most recent first)</h3>
 	<table>
-	<%= will_paginate @rolls %>
-	<% @rolls.each do |roll| %>
 	  <tr>
-	    <td class="roll_table_cell"><%= roll.total %></td>
-	    <td class="roll_table_cell"><%= link_to image_tag('delete.png', :height => '30'), roll, method: :delete %></td>
-		
+  		<% @rolls.each do |roll| %>
+		    <td class="roll_table_cell"><%= roll.total %></td>
+		    <td class="delete_roll"><%= link_to image_tag('delete.png', :height => '23',:class => 'delete_roll'), roll, method: :delete %></td>
+			<% end %>
 	  </tr>
-	<% end %>
 	</table>
+	<br />
+	<%= will_paginate @rolls %>
 </body>
 </html>

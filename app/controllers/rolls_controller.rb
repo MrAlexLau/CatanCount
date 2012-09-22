@@ -41,7 +41,7 @@ class RollsController < ApplicationController
     
     @actual_series, @expected_series = Roll.get_game_stats(@game_id)
     
-    @rolls = Roll.where("game_number = (?)", @game_id).paginate(:page => params[:page], :per_page => 10).order("created_at DESC")
+    @rolls = Roll.where("game_number = (?)", @game_id).paginate(:page => params[:page], :per_page => 5).order("created_at DESC")
     #@rolls = @rolls
     
     @roll = Roll.new

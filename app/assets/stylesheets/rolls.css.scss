@@ -1,3 +1,25 @@
 // Place all the styles related to the Rolls controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+a img{
+	&:hover {
+		background-color: white;
+	}
+}
+
+.delete_roll{
+	padding-top: 4px;	
+	padding-bottom: 3px;	
+	vertical-align: bottom;
+}
+
+
+.pagination a{
+	padding-left: 10px;
+	padding-right: 10px;
+	
+	&:hover {
+		color:black;
+		background-color: white;
+	}
+}

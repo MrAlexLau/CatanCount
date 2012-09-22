@@ -27,17 +27,24 @@
 	border: 1px solid #006;
   background: #9CA5DB; /*BFBFBF*/
 	font-size: 15px;
+	height: 23px;
+	width: 50px;
 }
 
 .roll_button_odd{
 	border: 1px solid #006;
   background: #9CA5DB;
 	font-size: 15px;
+	height: 23px;
+	width: 50px;
 }
 
 .roll_table_cell{
-	height: 25px;
+	font-size: 23px;
+	height: 23px;
+	padding-left: 25px;
 }
+
 
 .legend_cell{
 	width:20px; 
@@ -52,6 +59,19 @@
 .actual{
 	background-color: #F04155;
 }
+
+.pagination{
+	font-size: 20px;
+}
+
+
+
+.current{
+	font-size: 23px;
+	font-weight: bold;
+	font-style: normal;
+}
+
 /*
 table{
 	.jqplot-table-legend{
