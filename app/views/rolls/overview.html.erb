@@ -83,16 +83,18 @@
 	<%= render 'form' %>
 	
 	<br /><br /><br />
-	<h3> <%= @rolls.count %> rolls for this game (most recent first)</h3>
+	<b><%= @rolls.count %></b> total rolls for this game. Recent rolls:
 	<table>
 	  <tr>
   		<% @rolls.each do |roll| %>
-		    <td class="roll_table_cell"><%= roll.total %></td>
+					<td class="roll_table_cell left_padded"><%= roll.total %></td>
 		    <td class="delete_roll"><%= link_to image_tag('delete.png', :height => '23',:class => 'delete_roll'), roll, method: :delete %></td>
 			<% end %>
 	  </tr>
 	</table>
 	<br />
+	View more rolls:
 	<%= will_paginate @rolls %>
+
 </body>
 </html>
