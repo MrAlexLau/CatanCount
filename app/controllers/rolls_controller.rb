@@ -1,9 +1,11 @@
-class RollsController < ApplicationController
+class RollsController < ApplicationController  
+  load_and_authorize_resource :game
+  load_and_authorize_resource :roll, :through => :game
   
   # GET /rolls
   # GET /rolls.json
   def index
-    @rolls = Roll.all
+    #@rolls = Roll.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -27,7 +29,7 @@ class RollsController < ApplicationController
   def new
     @roll = Roll.new
       
-    @roll.game_number = session[:game_id]  
+    @roll.game_id = session[:game_id]  
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,11 +43,11 @@ class RollsController < ApplicationController
     
     @actual_series, @expected_series = Roll.get_game_stats(@game_id)
     
-    @rolls = Roll.where("game_number = (?)", @game_id).paginate(:page => params[:page], :per_page => 5).order("created_at DESC")
+    @rolls = Roll.where("game_id = (?)", @game_id).paginate(:page => params[:page], :per_page => 5).order("created_at DESC")
     #@rolls = @rolls
     
     @roll = Roll.new
-    @roll.game_number = @game_id
+    @roll.game_id = @game_id
     
 
     respond_to do |format|
@@ -63,8 +65,7 @@ class RollsController < ApplicationController
   def create
     @roll = Roll.new(params[:roll])
 
-    @roll.game_number = session[:game_id]
-    @roll.total = get_dice_roll_value()
+    @roll.game_id = session[:game_id]
     
     respond_to do |format|
       if @roll.save
@@ -96,40 +97,11 @@ class RollsController < ApplicationController
   # DELETE /rolls/1
   # DELETE /rolls/1.json
   def destroy
-    @roll = Roll.find(params[:id])
     @roll.destroy
-
     respond_to do |format|
-      format.html { redirect_to rolls_overview_path, notice: 'Roll was deleted.' }
-      format.json { render json: rolls_overview_path, status: :created, location: @roll }
+      format.html { redirect_to game_path(@game), notice: 'Roll was deleted.' }
+      format.json { render json: game_path(@game), status: :created, location: @roll }
     end
   end
   
-  def get_dice_roll_value
-    if params[:one_button] == "1"
-      return 1
-    elsif params[:two_button] == "2"
-      return 2
-    elsif params[:three_button] == "3"
-      return 3
-    elsif params[:four_button] == "4"
-      return 4
-    elsif params[:five_button] == "5"
-      return 5
-    elsif params[:six_button] == "6"
-      return 6
-    elsif params[:seven_button] == "7"
-      return 7
-    elsif params[:eight_button] == "8"
-      return 8
-    elsif params[:nine_button] == "9"
-      return 9
-    elsif params[:ten_button] == "10"
-      return 10
-    elsif params[:eleven_button] == "11"
-      return 11
-    elsif params[:twelve_button] == "12"
-      return 12
-    end
-  end
 end
