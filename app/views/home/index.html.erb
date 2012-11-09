@@ -1,10 +1,7 @@
 <h1>Catan Count</h1>
 This website lets you easily track statistics in games with 2 dice, such as Settlers of Catan.
 <div id="user_nav">
- 	<% if current_user.is_guest? %>
-    You are currently signed in as a guest.
-		<%= link_to "Go Back?", signout_path %> 	
-	<% elsif current_user %>
+	<% if current_user %>
     Welcome, <%= current_user.name %>
 		<%= link_to "Sign Out", signout_path %>
 	<% else %>

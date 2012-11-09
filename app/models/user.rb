@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   end
   
   def is_guest?()
-    return self.uid == -1
+    return (self.uid == "-1")
   end
   
   def role?(r)

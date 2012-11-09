@@ -93,6 +93,7 @@
 			Add another dice roll:<br>
 		</p>
 		
+		<div style="min-height:20px;">
 		<%= form_for(@game, :url => { :action => "add_roll" }) do %>
 
 		<div class="roll_button_div">
@@ -127,12 +128,12 @@
 		</div>
 		<div class="roll_button_div">
 			<input name="twelve_button" class="roll_button_odd" type="submit" value="12">
-		</div><% end %>
+		</div>
+		<% end %>
+		</div>
 		
 		<% if @rolls.length > 0 %>
 		<p>
-			<br>
-			<br>
 			<br>
 			<b><%= @game.rolls.count %></b> total rolls for this game. Recent rolls:
 		</p>
@@ -144,14 +145,19 @@
 				</td>
 				<td class="delete_roll">
 					<%= link_to image_tag('delete.png', :height => '23',:class => 'delete_roll'), game_roll_path(@game, roll), method: :delete %>
-				</td><% end %>
+				</td>
+				<% end %>
 			</tr>
 		</table>
-		<p>
-			<br>
-			<% if @game.rolls.length > 5 %> View more rolls: <%= will_paginate @rolls %> <% end %>
-		</p>
+
+		<% if @game.rolls.length > 5 %>
+			<p>
+				<br/>
+				 View more rolls: <%= will_paginate @rolls %> 	
+			</p>
 		<% end %>
+		<% end %>
+		<br />
 		<br />
 		<div id="myStopwatch"></div>
 
