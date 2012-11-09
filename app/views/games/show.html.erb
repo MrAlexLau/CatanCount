@@ -3,9 +3,13 @@
 	<head>
 		<title>
 			CatanCount
-		</title><%= stylesheet_link_tag    "application", :media => "all" %><%= javascript_include_tag "application" %><%= csrf_meta_tags %>
+		</title>
+		<%= stylesheet_link_tag    "application", :media => "all" %>
+		<%= javascript_include_tag "application" %><%= csrf_meta_tags %>
 		<script type="text/javascript">
-$(document).ready(function(){
+			$(document).ready(function(){
+	   		$('#myStopwatch').stopwatch('theme-1'); //show stopwatch
+
 				$(".next_page").html("Older >");
 				$(".previous_page").html("< Newer");
 				var s1 = <%= raw @expected_series.to_json %>;
@@ -145,8 +149,11 @@ $(document).ready(function(){
 		</table>
 		<p>
 			<br>
-			<% if @rolls.length > 5 %> View more rolls: <%= will_paginate @rolls %> <% end %>
+			<% if @game.rolls.length > 5 %> View more rolls: <%= will_paginate @rolls %> <% end %>
 		</p>
 		<% end %>
+		<br />
+		<div id="myStopwatch"></div>
+
 	</body>
 </html>
