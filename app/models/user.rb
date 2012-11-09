@@ -30,6 +30,10 @@ class User < ActiveRecord::Base
     return guest_user
   end
   
+  def is_guest?()
+    return self.uid == -1
+  end
+  
   def role?(r)
     return (role == r.to_s)
   end
