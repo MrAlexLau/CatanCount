@@ -7,6 +7,7 @@ gem 'rails', '3.2.3'
 
 # gem 'sqlite3'
 gem 'pg'
+gem 'mysql2'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
@@ -22,6 +23,13 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
 end
+
+gem "debugger"
+gem 'libv8'
+gem 'therubyracer'
+gem 'less-rails'
+# gem 'jquery-rails'
+gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 
 gem 'will_paginate', '~> 3.0'
 gem 'jquery-rails'
