@@ -35,10 +35,10 @@ test:
   password:
   socket: /tmp/mysql.sock
 
-production:
-  adapter: postgresql
-  encoding: unicode
-  database: catan_production
-  pool: 5
-  username: 
-  password:
+# production:
+#   adapter: postgresql
+#   encoding: unicode
+#   database: catan_production
+#   pool: 5
+#   username: 
+#   password:
