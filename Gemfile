@@ -48,5 +48,7 @@ gem 'jquery-rails'
 
 # To use debugger
 group :development do
-  gem 'ruby-debug19', :require => 'ruby-debug'
+  # gem 'ruby-debug19', :require => 'ruby-debug'
+  gem 'better_errors'
+  gem 'braise'
 end

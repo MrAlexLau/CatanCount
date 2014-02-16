@@ -48,21 +48,6 @@
 	padding-left: 25px;
 }
 
-
-.legend_cell{
-	width:20px; 
-	height:20px; 
-	border: 1px solid black;
-}
-
-.expected{	
-	background-color: #43DE4D; 
-}
-
-.actual{
-	background-color: #F04155;
-}
-
 .pagination{
 	font-size: 20px;
 }

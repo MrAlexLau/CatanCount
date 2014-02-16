@@ -3,11 +3,6 @@
   <%= submit_tag("New Game?") %>
 <% end %>
 <br /><br />
-<%= form_tag("home/existing_game", :method => "get") do %>
-	<%= label_tag(:game_id, "Existing game id:") %>
-  <%= text_field_tag(:game_id) %>
-  <%= submit_tag("Go") %>
-<% end %>
 
 <div id="user_nav">
  	<% if current_user %>

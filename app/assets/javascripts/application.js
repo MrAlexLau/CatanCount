@@ -12,6 +12,43 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree ./jqplot
 //= require_tree .
 
+function drawChart(actuals, expecteds) {
+  $('#chart').highcharts({
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Dice Rolls: Actual vs Expected'
+    },
+    xAxis: {
+        categories: ['2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+    },
+    yAxis: {
+        title: {
+            text: 'Rolls'
+        }
+    },
+    colors: [
+       '#2f7ed8', 
+       '#a6c96a'
+    ],
+    plotOptions: {
+        column: {
+            dataLabels: {
+                enabled: true
+            },
+            enableMouseTracking: false
+        }
+    },
+    series: [{
+        name: 'Actual',
+        data: actuals,
+        backgroundColor: '#2DD62D'
+    }, {
+        name: 'Expected',
+        data: expecteds
+    }]
+  });
+}

@@ -39,8 +39,7 @@ class Roll < ActiveRecord::Base
     
     total_number_of_rolls = rolls_for_game.count
     for i in 0..10
-      #debugger
-      expected[i] = roll_percentages[i] * total_number_of_rolls
+      expected[i] = (roll_percentages[i] * total_number_of_rolls).round(2)
     end
     
     
