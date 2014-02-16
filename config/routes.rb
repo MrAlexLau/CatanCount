@@ -6,8 +6,12 @@ CatanCount::Application.routes.draw do
   match "/auth/:provider/callback" => "sessions#create"
   match "/signout" => "sessions#destroy", :as => :signout
   
-  match 'rolls/overview' => 'rolls#overview', :as => :rolls_overview
-  resources :rolls
+  match 'games/:id/add_roll' => 'games#add_roll'
+  match 'games/:id/show' => 'games#show'
+
+  resources :games do 
+    resources :rolls
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

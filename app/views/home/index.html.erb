@@ -1,17 +1,16 @@
-<h1>Catan Stats</h1>
-<%= form_tag("home/new_game", :method => "get") do %>
-  <%= submit_tag("New Game?") %>
-<% end %>
-<br /><br />
-
+<h1>Catan Count</h1>
+This website lets you easily track statistics in games with 2 dice, such as Settlers of Catan.
 <div id="user_nav">
- 	<% if current_user %>
+	<% if current_user %>
     Welcome, <%= current_user.name %>
 		<%= link_to "Sign Out", signout_path %>
 	<% else %>
-  	<%= link_to "Sign in with Facebook", "/auth/facebook" %>
+		Log in with an existing account to access your game history:<br />
+  	<%= link_to "Facebook", "/auth/facebook" %> &nbsp;
+  	<%= link_to "Google", "/auth/google_oauth2" %>
+<br /><br />
+		Or track your games publicly:
 		<br />
-		<br />
-  	<%= link_to "Sign in with Google", "/auth/google_oauth2" %>
+		<%= link_to "New Game", "home/new_game", :method => "get" %>
 	<% end %>
 </div>

@@ -1,15 +1,18 @@
 class HomeController < ApplicationController
   def index
+    if not session[:user_id].nil?
+      redirect_to games_path()
+    end
   end
   
   def new_game  
-    session[:game_id] = Roll.get_game_id()
-    redirect_to rolls_overview_path(), :action => 'overview'
+    guest = User.get_guest()
+    session[:user_id] = guest.id
+    
+    new_game = Game.get_new_game(guest.id)
+    session[:game_id] = new_game.id
+    
+    redirect_to game_path(new_game), :action => 'show'
   end
-  
-  def existing_game
-    session[:game_id] = params[:game_id]
-    redirect_to rolls_overview_path(), :action => 'overview'
-  end
-  
+    
 end

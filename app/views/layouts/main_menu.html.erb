@@ -1,0 +1,7 @@
+<% if current_user and current_user.is_guest? %>
+    You are currently signed in as a guest.
+		<%= link_to "Go Back?", signout_path %> 	
+<% elsif current_user %>
+  Welcome, <%= current_user.name %>
+	<%= link_to "Sign Out", signout_path %>
+<% end %>

@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+	<head>
+		<title>
+			CatanCount
+		</title>
+		<%= stylesheet_link_tag    "application", :media => "all" %>
+		<%= javascript_include_tag "application" %><%= csrf_meta_tags %>
+		<script type="text/javascript">
+			$(document).ready(function(){
+	   		$('#myStopwatch').stopwatch('theme-1'); //show stopwatch
+
+				$(".next_page").html("Older >");
+				$(".previous_page").html("< Newer");
+				var s1 = <%= raw @expected_series.to_json %>;
+				var s2 = <%= raw @actual_series.to_json %>;
+						
+				// Can specify a custom tick Array.
+				// Ticks should match up one for each y value (category) in the series.
+				var ticks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+		 
+				var plot1 = $.jqplot('chart1', [s1, s2], {
+						// The "seriesDefaults" option is an options object that will
+						// be applied to all series in the chart.
+						seriesDefaults:{
+								renderer:$.jqplot.BarRenderer,
+								rendererOptions: {fillToZero: true},
+								pointLabels: {show: true,
+															formatString: '%.2f'}
+						},
+						// Custom labels for the series are specified with the "label"
+						// option on the series option.  Here a series option object
+						// is specified for each series.
+						series:[
+								{color: '#43DE4D'},
+								{color: '#F04155'}
+						],
+						// Show the legend and put it outside the grid, but inside the
+						// plot container, shrinking the grid to accomodate the legend.
+						// A value of "outside" would not shrink the grid and allow
+						// the legend to overflow the container.
+						axes: {
+								// Use a category axis on the x axis and use our custom ticks.
+								xaxis: {
+									renderer: $.jqplot.CategoryAxisRenderer,
+									ticks: ticks
+									
+								},
+								// Pad the y axis just a little so bars can get close to, but
+								// not touch, the grid boundaries.  1.2 is the default padding.
+								yaxis: {
+										// pad: 1.2,
+										//                    marginLeft: 5,
+										//                    padLeft: 5,
+										// tickOptions: {formatString: '%d'}
+								}
+						},
+						legend: {
+							show: false//,              
+							//placement: 'outsideGrid'
+						}
+				});
+		});
+		</script>
+	</head>
+	<body>
+					<%= render :file => 'layouts/main_menu' %>
+					
+		<h1>
+			Game name: <%= raw @game.game_name %>
+		</h1>
+		<table>
+			<tr>
+				<td>
+					Expected Values
+				</td>
+				<td class="legend_cell expected">
+					&nbsp;
+				</td>
+				<td>
+					&nbsp;
+				</td>
+				<td>
+					Actual Values
+				</td>
+				<td class="legend_cell actual">
+					&nbsp;
+				</td>
+			</tr>
+		</table>
+		<div id="chart1" style="max-width: 80%; min-height: 250px;"></div>
+		<p>
+			Add another dice roll:<br>
+		</p>
+		
+		<div style="min-height:20px;">
+		<%= form_for(@game, :url => { :action => "add_roll" }) do %>
+
+		<div class="roll_button_div">
+			<input name="two_button" class="roll_button_odd" type="submit" value="2">
+		</div>
+		<div class="roll_button_div">
+			<input name="three_button" class="roll_button_even" type="submit" value="3">
+		</div>
+		<div class="roll_button_div">
+			<input name="four_button" class="roll_button_odd" type="submit" value="4">
+		</div>
+		<div class="roll_button_div">
+			<input name="five_button" class="roll_button_even" type="submit" value="5">
+		</div>
+		<div class="roll_button_div">
+			<input name="six_button" class="roll_button_odd" type="submit" value="6">
+		</div>
+		<div class="roll_button_div">
+			<input name="seven_button" class="roll_button_even" type="submit" value="7">
+		</div>
+		<div class="roll_button_div">
+			<input name="eight_button" class="roll_button_odd" type="submit" value="8">
+		</div>
+		<div class="roll_button_div">
+			<input name="nine_button" class="roll_button_even" type="submit" value="9">
+		</div>
+		<div class="roll_button_div">
+			<input name="ten_button" class="roll_button_odd" type="submit" value="10">
+		</div>
+		<div class="roll_button_div">
+			<input name="eleven_button" class="roll_button_even" type="submit" value="11">
+		</div>
+		<div class="roll_button_div">
+			<input name="twelve_button" class="roll_button_odd" type="submit" value="12">
+		</div>
+		<% end %>
+		</div>
+		
+		<% if @rolls.length > 0 %>
+		<p>
+			<br>
+			<b><%= @game.rolls.count %></b> total rolls for this game. Recent rolls:
+		</p>
+		<table>
+			<tr>
+				<% @rolls.each do |roll| %>
+				<td class="roll_table_cell left_padded">
+					<%= roll.total %>
+				</td>
+				<td class="delete_roll">
+					<%= link_to image_tag('delete.png', :height => '23',:class => 'delete_roll'), game_roll_path(@game, roll), method: :delete %>
+				</td>
+				<% end %>
+			</tr>
+		</table>
+
+		<% if @game.rolls.length > 5 %>
+			<p>
+				<br/>
+				 View more rolls: <%= will_paginate @rolls %> 	
+			</p>
+		<% end %>
+		<% end %>
+		<br />
+		<br />
+		<div id="myStopwatch"></div>
+
+	</body>
+</html>

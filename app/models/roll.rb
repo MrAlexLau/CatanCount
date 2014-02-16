@@ -1,15 +1,6 @@
 class Roll < ActiveRecord::Base
-  attr_accessible :dice1, :dice2, :game_number, :total
-  
-  def self.get_game_id()
-    x = Roll.maximum("game_number")
-    if x.nil?
-      return 1
-    else
-      return x + 1
-    end
-  end
-  
+  attr_accessible :dice1, :dice2, :game_id, :total
+
   def self.get_game_stats(game_number)
     expected = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     actual = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -30,7 +21,7 @@ class Roll < ActiveRecord::Base
       roll_percentages[i] = roll_percent / 100
     end
             
-    rolls_for_game = Roll.where("game_number = (?)", game_number).order("created_at DESC")
+    rolls_for_game = Roll.where("game_id = (?)", game_number).order("created_at DESC")
     
     rolls_for_game.each do |roll|
       actual[roll.total - 2] += 1
