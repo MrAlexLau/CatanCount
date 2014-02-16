@@ -7,7 +7,6 @@ gem 'rails', '3.2.16'
 
 # gem 'sqlite3'
 gem 'pg'
-gem 'mysql2'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
@@ -51,6 +50,9 @@ gem 'jquery-rails'
 # To use debugger
 group :development do
   # gem 'ruby-debug19', :require => 'ruby-debug'
+  gem 'mysql2'
+  
   gem 'better_errors'
+
   gem 'braise'
 end
