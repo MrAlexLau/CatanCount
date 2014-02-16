@@ -25,7 +25,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem "debugger"
+# gem "debugger"
 gem 'libv8'
 gem 'therubyracer'
 gem 'less-rails'
