@@ -125,7 +125,7 @@ $( document ).ready( function() {
 
   $('#undo-last-roll').click(function(e){
     var allRolls = $('#rolls-history').html(),
-        delimiter = ', ',
+        delimiter = ',',
         lastRollValue = -1;
 
     if (allRolls.lastIndexOf(delimiter) === -1){
