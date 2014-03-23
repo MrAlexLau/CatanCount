@@ -22,7 +22,6 @@ gem 'less-rails'
 # gem 'jquery-rails'
 gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git', :branch => 'bootstrap3'
 
-gem 'will_paginate', '~> 3.0'
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password

@@ -17,6 +17,7 @@
 //= require_tree .
 
 function drawChart(actuals, expecteds) {
+  if (getTotalRolls(actuals) < 1) { return null; }
   return new Highcharts.Chart({
     chart: {
         type: 'column',
@@ -89,8 +90,16 @@ $( document ).ready( function() {
     actualSeries[getArrayIndex(rollValue)]++;
     expectedSeries = calcExpectedRollPercents(getTotalRolls(actualSeries));
 
+    if (chart === null) {
+      chart = drawChart(
+        actualSeries,
+        expectedSeries
+      );
+    }
     chart.series[0].setData(actualSeries, false);
     chart.series[1].setData(expectedSeries, false);
     chart.redraw();
-  })
+
+    $('#enter-dice-roll').hide();
+  });
 })

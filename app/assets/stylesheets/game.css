@@ -7,3 +7,11 @@
 .dice-roll > h3{
   margin-top: 10px;
 }
+
+.delete-roll .glyphicon {
+  color: #c7254e;
+}
+
+.game-title {
+  text-align: center;
+}

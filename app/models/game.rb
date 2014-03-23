@@ -7,8 +7,6 @@ class Game < ActiveRecord::Base
     g = Game.new
     g.user_id = user_id
     g.save()
-    g.game_name = g.id
-    g.save()
     return g
   end
   

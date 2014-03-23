@@ -19,14 +19,21 @@
 		</script>
 	</head>
 	<body>
-					
-		<h3>
-			Game name: <%= raw @game.game_name %>
-		</h3>
-	  <div id="chart" style="width:95%; padding-left: 10px"></div>
-		<p>
-			Enter dice roll:<br>
-		</p>
+		<% content_for :main_menu do %>
+			<%= render :file => 'layouts/main_menu' %>
+		<% end %>
+
+		<% if !@game.game_name.blank? %>
+			<h3 class='game-title'>
+				<%= @game.game_name %>
+			</h3>
+		<% end %>
+
+		<% if @game.rolls.count < 1 %>
+			<div id="enter-dice-roll">
+				Enter dice roll:
+			</div>
+		<% end %>
 		<div class="row">
       <div class="col-sm-11">
       	<% for i in 2..12 %>
@@ -37,30 +44,26 @@
    			<% end %>
       </div>
     </div> <!-- end dice roll buttons row -->
-		
-		<% if @rolls.length > 0 %>
-		<div>
-			<b><%= @game.rolls.count %></b> total rolls for this game. Recent rolls:
-		</div>
-		<table>
-			<tr>
-				<% @rolls.each do |roll| %>
-				<td class="roll_table_cell left_padded">
-					<%= roll.total %>
-				</td>
-				<td class="delete_roll">
-					<%= link_to image_tag('delete.png', :height => '23',:class => 'delete_roll'), game_roll_path(@game, roll), method: :delete %>
-				</td>
-				<% end %>
-			</tr>
-		</table>
 
-		<% if @game.rolls.length > 5 %>
-			<p>
-				<br/>
-				 View more rolls: <%= will_paginate @rolls %> 	
-			</p>
-		<% end %>
+
+	  <div id="chart" style="width:95%; padding-left: 10px"></div>
+		
+		<% if @game.rolls.length > 0 %>
+			<div>
+				<b><%= @game.rolls.count %></b> total rolls for this game. Recent rolls:
+			</div>
+			<table>
+				<tr>
+					<% @game.rolls.each do |roll| %>
+					<td class="delete-roll left_padded">
+						<%= link_to game_roll_path(@game, roll), method: :delete, :class => 'btn btn-default' do %>
+							<%= roll.total %><span class="glyphicon glyphicon-remove"></span>
+						<% end %>
+					</td>
+					<% end %>
+				</tr>
+			</table>
+
 		<% end %>
 
 	</body>

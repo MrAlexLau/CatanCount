@@ -37,29 +37,6 @@ class RollsController < ApplicationController
     end
   end
   
-  # GET /rolls/overview
-  def overview
-    @game_id = session[:game_id]
-    
-    @actual_series, @expected_series = Roll.get_game_stats(@game_id)
-    
-    @rolls = Roll.where("game_id = (?)", @game_id).paginate(:page => params[:page], :per_page => 5).order("created_at DESC")
-    #@rolls = @rolls
-    
-    @roll = Roll.new
-    @roll.game_id = @game_id
-    
-
-    respond_to do |format|
-      format.html # overview.html.erb
-    end
-  end
-
-  # GET /rolls/1/edit
-  def edit
-    @roll = Roll.find(params[:id])
-  end
-
   # POST /rolls
   # POST /rolls.json
   def create

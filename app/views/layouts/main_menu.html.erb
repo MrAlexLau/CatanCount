@@ -6,20 +6,9 @@
     <span class="navbar-brand" href="#">Catan Count</span>
     <ul class="nav navbar-nav">
       <li><%= link_to "New Game", games_path, method: :post %></li>
-      <li><%= link_to "My Games", games_path %></li>
-    </ul>
-    <div class="pull-right">
-      <ul class="nav navbar-nav">
 
-      <% if current_user and current_user.is_guest? %>
-          You are currently signed in as a guest.
-          <%= link_to "Go Back?", signout_path %>   
-      <% elsif current_user %>
-
+      <% if current_user && !current_user.is_guest? %>
         <li><%= link_to "Sign Out", signout_path %></li>
-       <!--  Welcome, <%= current_user.name %>
-        
-        <li><a id="logout" class="is-logged-in" href="<%= signout_path %>">Log Out</a></li> -->
       <% else %>
         <%# not logged in %>
         <li class="dropdown">
@@ -30,10 +19,7 @@
           </ul>
         </li>
       <% end %>
-
-
-      </ul>
-    </div>
+    </ul>
   </div>
 </nav>
 

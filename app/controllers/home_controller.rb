@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   def index
-    if not session[:user_id].nil?
+    if !session[:user_id].nil? && current_user && !current_user.is_guest?
       redirect_to games_path()
     end
   end

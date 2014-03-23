@@ -8,7 +8,8 @@
 </head>
 <body>
 
-<%= render :file => 'layouts/main_menu' %>
+<%= yield(:main_menu) if content_for?(:main_menu) %>
+
 
 <div class="main-content">
 	<%= yield %>
