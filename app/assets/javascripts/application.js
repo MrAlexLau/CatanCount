@@ -35,7 +35,7 @@ function drawChart(actuals, expecteds) {
         }
     },
     colors: [
-       '#2f7ed8', 
+       '#2f7ed8',
        '#a6c96a'
     ],
     plotOptions: {
@@ -83,6 +83,18 @@ function getTotalRolls(arr) {
   return sum;
 }
 
+function updateRollsHistory(rollsArr, newestRoll) {
+  var total = getTotalRolls(rollsArr),
+      rollStr = 'rolls',
+      rollHistoryStr = '';
+
+  if (total === 1) { rollStr = 'roll'; }
+  $('#recent-rolls-header').html("" + total + " " + rollStr + " for this game:");
+
+  $('#rolls-history').html($('#rolls-history').html().trim());
+  $('#rolls-history').append(', ' + newestRoll);
+}
+
 $( document ).ready( function() {
   $('.dice-roll').click(function(e){
     var rollValue = parseInt($(this).data('value'));
@@ -100,6 +112,30 @@ $( document ).ready( function() {
     chart.series[1].setData(expectedSeries, false);
     chart.redraw();
 
+    updateRollsHistory(actualSeries, rollValue);
+
     $('#enter-dice-roll').hide();
+    $('#recent-rolls-div').show();
   });
-})
+
+  $('#undo-last-roll').click(function(e){
+    var allRolls = $('#rolls-history').html(),
+        delimiter = ', ',
+        lastRollValue = allRolls.substring(allRolls.lastIndexOf(delimiter) + delimiter.length).trim();
+
+    $('#rolls-history').html(allRolls.substring(0, allRolls.lastIndexOf(',')));
+
+    actualSeries[getArrayIndex(lastRollValue)]--;
+    expectedSeries = calcExpectedRollPercents(getTotalRolls(actualSeries));
+
+    if (chart === null) {
+      chart = drawChart(
+        actualSeries,
+        expectedSeries
+      );
+    }
+    chart.series[0].setData(actualSeries, false);
+    chart.series[1].setData(expectedSeries, false);
+    chart.redraw();
+  });
+});

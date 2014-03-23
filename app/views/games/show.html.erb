@@ -14,7 +14,11 @@
 				chart = drawChart(
           actualSeries,
           expectedSeries
-        ); 
+        );
+
+        <% if @game.rolls.count < 1 %>
+					$('#recent-rolls-div').hide();
+				<% end %>
 			});
 		</script>
 	</head>
@@ -45,26 +49,26 @@
       </div>
     </div> <!-- end dice roll buttons row -->
 
-
 	  <div id="chart" style="width:95%; padding-left: 10px"></div>
-		
-		<% if @game.rolls.length > 0 %>
-			<div>
-				<b><%= @game.rolls.count %></b> total rolls for this game. Recent rolls:
-			</div>
-			<table>
-				<tr>
-					<% @game.rolls.each do |roll| %>
-					<td class="delete-roll left_padded">
-						<%= link_to game_roll_path(@game, roll), method: :delete, :class => 'btn btn-default' do %>
-							<%= roll.total %><span class="glyphicon glyphicon-remove"></span>
-						<% end %>
-					</td>
-					<% end %>
-				</tr>
-			</table>
 
-		<% end %>
+		<div id='recent-rolls-div'>
+			<div id='recent-rolls-header'>
+				<%= pluralize @game.rolls.count, 'roll' %> for this game:
+			</div>
+			<div id='rolls-history'>
+				<% @game.rolls.each do |roll| %>
+
+					<% if roll != @game.rolls.last %>
+						<%= roll.total %>,
+					<% else %>
+						<%= roll.total %>
+					<% end %>
+				<% end %>
+			</div>
+
+			<%= link_to "Undo last roll?", undo_last_roll_path(@game), method: :delete, id: "undo-last-roll", :class => 'btn btn-danger', remote: true %>
+		</div>
+
 
 	</body>
 </html>

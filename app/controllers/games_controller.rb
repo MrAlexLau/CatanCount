@@ -39,6 +39,13 @@ class GamesController < ApplicationController
     redirect_to @game
   end
 
+
+  def undo_last_roll
+    @game = Game.find(params[:id])
+    @game.rolls.order("created_at DESC").first.destroy
+    render nothing: true
+  end
+
   private 
 
   def set_up_new_game

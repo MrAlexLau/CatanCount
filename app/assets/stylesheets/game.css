@@ -15,3 +15,11 @@
 .game-title {
   text-align: center;
 }
+
+.rolls-count {
+  font-weight: bold;
+}
+
+#recent-rolls-div {
+  width: 500px;
+}
