@@ -63,19 +63,22 @@ class RollsController < ApplicationController
   # POST /rolls
   # POST /rolls.json
   def create
-    @roll = Roll.new(params[:roll])
-
-    @roll.game_id = session[:game_id]
+    @roll = Roll.new
+    @roll.total = params['value']
+    @roll.game_id = params[:game_id]
+    @roll.save
     
-    respond_to do |format|
-      if @roll.save
-        format.html { redirect_to rolls_overview_path, notice: 'Roll was successfully created.' }
-        format.json { render json: rolls_overview_path, status: :created, location: @roll }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @roll.errors, status: :unprocessable_entity }
-      end
-    end
+    # respond_to do |format|
+    #   if @roll.save
+    #     format.html { redirect_to rolls_overview_path, notice: 'Roll was successfully created.' }
+    #     format.json { render json: rolls_overview_path, status: :created, location: @roll }
+    #   else
+    #     format.html { render action: "new" }
+    #     format.json { render json: @roll.errors, status: :unprocessable_entity }
+    #   end
+    # end
+
+    redirect_to @game
   end
 
   # PUT /rolls/1

@@ -12,6 +12,9 @@
  *= require_tree .
 */
 
+.main-content{
+	padding-left: 10px;
+}
 
 .jqplot-yaxis{
 	padding-right: 15px;

@@ -7,6 +7,12 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+
+<%= render :file => 'layouts/main_menu' %>
+
+<div class="main-content">
 	<%= yield %>
+</div>
+
 </body>
 </html> 

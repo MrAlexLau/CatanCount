@@ -2,10 +2,11 @@ class GamesController < ApplicationController
   load_and_authorize_resource :game
   def index
     @games = Game.where("user_id = (?)", session[:user_id]).order("created_at DESC")
-        
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @rolls }
+    
+    if @games.empty?
+      @game = set_up_new_game
+      @game.save
+      redirect_to game_path(@game) and return 
     end
   end
   
@@ -25,12 +26,7 @@ class GamesController < ApplicationController
   end
   
   def new
-    @game = Game.new()
-    @game.create_date = Date.today
-    @game.user_id = session[:user_id]
-    
-    users_games_today = Game.where("user_id = (?) and create_date = (?)", session[:user_id], Date.today).order("created_at DESC")
-    @game.game_name = Date.today.to_s + " Game " + (users_games_today.length + 1).to_s
+    @game = set_up_new_game
     
     respond_to do |format|
       if @game.save
@@ -41,6 +37,28 @@ class GamesController < ApplicationController
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
     end
+
+    render 'show'
+  end
+
+  # POST /games
+  # POST /games.json
+  def create
+    @game = set_up_new_game
+    
+    # respond_to do |format|
+    #   if @game.save
+    #     format.html { redirect_to games_path, notice: 'Game was successfully created.' }
+    #     format.json { render json: games_path, status: :created, location: @game }
+    #   else
+    #     format.html { render action: "new" }
+    #     format.json { render json: @game.errors, status: :unprocessable_entity }
+    #   end
+    # end
+
+    @game.save
+
+    render 'show'
   end
   
   def add_roll
@@ -60,6 +78,8 @@ class GamesController < ApplicationController
     end
   end
     
+  private 
+
   def get_dice_roll_value
     if params[:one_button] == "1"
       return 1
@@ -88,6 +108,17 @@ class GamesController < ApplicationController
     else
       return -1
     end
+  end
+
+  def set_up_new_game
+    game = Game.new()
+    game.create_date = Date.today
+    game.user_id = session[:user_id]
+    
+    users_games_today = Game.where("user_id = (?) and create_date = (?)", session[:user_id], Date.today).order("created_at DESC")
+    game.game_name = Date.today.to_s + " Game " + (users_games_today.length + 1).to_s
+
+    return game
   end
   
 end

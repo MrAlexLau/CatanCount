@@ -1,0 +1,9 @@
+
+.dice-roll{
+  width: 50px;
+  margin: 10px;
+}
+
+.dice-roll > h3{
+  margin-top: 10px;
+}

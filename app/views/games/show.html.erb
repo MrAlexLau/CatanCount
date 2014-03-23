@@ -8,8 +8,6 @@
 		<%#= javascript_include_tag "application" %><%= csrf_meta_tags %>
 		<script type="text/javascript">
 			$(document).ready(function(){
-	   		$('#myStopwatch').stopwatch('theme-1'); //show stopwatch
-
 				$(".next_page").html("Older >");
 				$(".previous_page").html("< Newer");
 				var s1 = <%= raw @expected_series.to_json %>;
@@ -23,60 +21,29 @@
 		</script>
 	</head>
 	<body>
-					<%= render :file => 'layouts/main_menu' %>
 					
-		<h1>
+		<h3>
 			Game name: <%= raw @game.game_name %>
-		</h1>
+		</h3>
 	  <div id="chart" style="width:95%; padding-left: 10px"></div>
 		<p>
-			Add another dice roll:<br>
+			Enter dice roll:<br>
 		</p>
-		
-		<div style="min-height:20px;">
-		<%= form_for(@game, :url => { :action => "add_roll" }) do %>
-
-		<div class="roll_button_div">
-			<input name="two_button" class="roll_button_odd" type="submit" value="2">
-		</div>
-		<div class="roll_button_div">
-			<input name="three_button" class="roll_button_even" type="submit" value="3">
-		</div>
-		<div class="roll_button_div">
-			<input name="four_button" class="roll_button_odd" type="submit" value="4">
-		</div>
-		<div class="roll_button_div">
-			<input name="five_button" class="roll_button_even" type="submit" value="5">
-		</div>
-		<div class="roll_button_div">
-			<input name="six_button" class="roll_button_odd" type="submit" value="6">
-		</div>
-		<div class="roll_button_div">
-			<input name="seven_button" class="roll_button_even" type="submit" value="7">
-		</div>
-		<div class="roll_button_div">
-			<input name="eight_button" class="roll_button_odd" type="submit" value="8">
-		</div>
-		<div class="roll_button_div">
-			<input name="nine_button" class="roll_button_even" type="submit" value="9">
-		</div>
-		<div class="roll_button_div">
-			<input name="ten_button" class="roll_button_odd" type="submit" value="10">
-		</div>
-		<div class="roll_button_div">
-			<input name="eleven_button" class="roll_button_even" type="submit" value="11">
-		</div>
-		<div class="roll_button_div">
-			<input name="twelve_button" class="roll_button_odd" type="submit" value="12">
-		</div>
-		<% end %>
-		</div>
+		<div class="row">
+      <div class="col-sm-11">
+      	<% for i in 2..12 %>
+      		<% css_class = i == 2 ? 'col-sm-1 col-sm-offset-1' : 'col-sm-1' %>
+	        <div class="<%= css_class %>">
+						<%= link_to i.to_s, game_rolls_path(@game, :value => i), method: :post, class: "btn btn-info btn-large dice-roll" %>
+	        </div>
+   			<% end %>
+      </div>
+    </div> <!-- end dice roll buttons row -->
 		
 		<% if @rolls.length > 0 %>
-		<p>
-			<br>
+		<div>
 			<b><%= @game.rolls.count %></b> total rolls for this game. Recent rolls:
-		</p>
+		</div>
 		<table>
 			<tr>
 				<% @rolls.each do |roll| %>
@@ -97,9 +64,6 @@
 			</p>
 		<% end %>
 		<% end %>
-		<br />
-		<br />
-		<div id="myStopwatch"></div>
 
 	</body>
 </html>
