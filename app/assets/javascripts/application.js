@@ -92,7 +92,12 @@ function updateRollsHistory(rollsArr, newestRoll) {
   $('#recent-rolls-header').html("" + total + " " + rollStr + " for this game:");
 
   $('#rolls-history').html($('#rolls-history').html().trim());
-  $('#rolls-history').append(', ' + newestRoll);
+  if (total > 1) {
+    $('#rolls-history').append(', ' + newestRoll);
+  }
+  else {
+    $('#rolls-history').append(newestRoll);
+  }
 }
 
 $( document ).ready( function() {
@@ -121,7 +126,14 @@ $( document ).ready( function() {
   $('#undo-last-roll').click(function(e){
     var allRolls = $('#rolls-history').html(),
         delimiter = ', ',
-        lastRollValue = allRolls.substring(allRolls.lastIndexOf(delimiter) + delimiter.length).trim();
+        lastRollValue = -1;
+
+    if (allRolls.lastIndexOf(delimiter) === -1){
+      lastRollValue = allRolls.trim();
+    }
+    else {
+      lastRollValue = allRolls.substring(allRolls.lastIndexOf(delimiter) + delimiter.length).trim();
+    }
 
     $('#rolls-history').html(allRolls.substring(0, allRolls.lastIndexOf(',')));
 
@@ -137,5 +149,11 @@ $( document ).ready( function() {
     chart.series[0].setData(actualSeries, false);
     chart.series[1].setData(expectedSeries, false);
     chart.redraw();
+
+
+    var total = getTotalRolls(actualSeries);
+    if (total < 1){
+      $('#recent-rolls-div').hide();
+    }
   });
 });
