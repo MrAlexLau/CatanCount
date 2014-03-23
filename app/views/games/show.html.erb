@@ -8,16 +8,14 @@
 		<%#= javascript_include_tag "application" %><%= csrf_meta_tags %>
 		<script type="text/javascript">
 			$(document).ready(function(){
-				$(".next_page").html("Older >");
-				$(".previous_page").html("< Newer");
-				var s1 = <%= raw @expected_series.to_json %>;
-				var s2 = <%= raw @actual_series.to_json %>;
-						
-				drawChart(
-          <%= @actual_series %>,
-          <%= @expected_series %>
+				expectedSeries = <%= raw @expected_series.to_json %>;
+				actualSeries = <%= raw @actual_series.to_json %>;
+
+				chart = drawChart(
+          actualSeries,
+          expectedSeries
         ); 
-		});
+			});
 		</script>
 	</head>
 	<body>
@@ -34,7 +32,7 @@
       	<% for i in 2..12 %>
       		<% css_class = i == 2 ? 'col-sm-1 col-sm-offset-1' : 'col-sm-1' %>
 	        <div class="<%= css_class %>">
-						<%= link_to i.to_s, game_rolls_path(@game, :value => i), method: :post, class: "btn btn-info btn-large dice-roll" %>
+						<%= link_to i.to_s, game_rolls_path(@game, :value => i), method: :post, class: "btn btn-info btn-large dice-roll", remote: true, data: { value: i } %>
 	        </div>
    			<% end %>
       </div>

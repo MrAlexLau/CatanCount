@@ -17,9 +17,10 @@
 //= require_tree .
 
 function drawChart(actuals, expecteds) {
-  $('#chart').highcharts({
+  return new Highcharts.Chart({
     chart: {
-        type: 'column'
+        type: 'column',
+        renderTo: 'chart'
     },
     title: {
         text: 'Dice Rolls: Actual vs Expected'
@@ -54,3 +55,42 @@ function drawChart(actuals, expecteds) {
     }]
   });
 }
+
+function roundTo2DecimalPlaces(n) {
+    return Math.round(n * 100) / 100;
+}
+
+function calcExpectedRollPercents(totalRolls) {
+    var rollPercentages = [2.7777, 5.5555, 8.3333, 11.1111, 13.8888, 16.6666, 13.8888, 11.1111, 8.3333, 5.5555, 2.7777],
+        expectedPercentages = new Array(11);
+
+    for (var i = 0; i < rollPercentages.length; i++) {
+        expectedPercentages[i] = roundTo2DecimalPlaces((rollPercentages[i] / 100) * totalRolls);
+    }
+    return expectedPercentages;
+}
+
+function getArrayIndex(n) {
+  return n - 2;
+}
+
+function getTotalRolls(arr) {
+  var sum = 0;
+  for(var i = 0; i < arr.length; i++){
+    sum += arr[i];
+  }
+  return sum;
+}
+
+$( document ).ready( function() {
+  $('.dice-roll').click(function(e){
+    var rollValue = parseInt($(this).data('value'));
+
+    actualSeries[getArrayIndex(rollValue)]++;
+    expectedSeries = calcExpectedRollPercents(getTotalRolls(actualSeries));
+
+    chart.series[0].setData(actualSeries, false);
+    chart.series[1].setData(expectedSeries, false);
+    chart.redraw();
+  })
+})
