@@ -1,7 +1,6 @@
 CatanCount::Application.routes.draw do
   get "home/index"
   get "home/new_game"
-  get "home/existing_game"
 
   match "/auth/:provider/callback" => "sessions#create"
   match "/signout" => "sessions#destroy", :as => :signout

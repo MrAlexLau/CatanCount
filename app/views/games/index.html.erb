@@ -2,9 +2,10 @@
   <%= render :file => 'layouts/main_menu' %>
 <% end %>
 
-<% @games.each do |game| %>
-  <div>
-    <%= link_to game.game_name, game %>
-  </div>
-<% end %>
-
+<ul>
+  <% @games.each do |game| %>
+    <li>
+      <%= link_to game.game_name, game %>
+    </li>
+  <% end %>
+</ul>
