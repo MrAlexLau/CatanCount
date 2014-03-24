@@ -14,11 +14,12 @@
 
 .main-content{
 	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .jqplot-yaxis{
 	padding-right: 15px;
-	
+
 }
 
 .roll_button_div{

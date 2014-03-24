@@ -1,5 +1,3 @@
-
-
 <nav class="navbar navbar-default" role="navigation">
   <!-- Brand and toggle get grouped for better mobile display -->
   <div class="navbar-header">
@@ -8,6 +6,8 @@
       <li><%= link_to "New Game", games_path, method: :post %></li>
 
       <% if current_user && !current_user.is_guest? %>
+        <li><%= link_to "My Games", games_path %></li>
+
         <li><%= link_to "Sign Out", signout_path %></li>
       <% else %>
         <%# not logged in %>

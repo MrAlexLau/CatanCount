@@ -27,12 +27,6 @@
 			<%= render :file => 'layouts/main_menu' %>
 		<% end %>
 
-		<% if !@game.game_name.blank? %>
-			<h3 class='game-title'>
-				<%= @game.game_name %>
-			</h3>
-		<% end %>
-
 		<% if @game.rolls.count < 1 %>
 			<div id="enter-dice-roll">
 				Enter dice roll:
