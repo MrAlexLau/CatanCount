@@ -1,10 +1,7 @@
 class Roll < ActiveRecord::Base
   attr_accessible :dice1, :dice2, :game_id, :total
 
-  def self.get_game_stats(game_number)
-    expected = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    actual = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    
+  def self.get_roll_percentages
     # 2.7777 #percentage for 2
     # 5.5555  #percentage for 3
     # 8.3333 #percentage for 4
@@ -20,20 +17,25 @@ class Roll < ActiveRecord::Base
     roll_percentages.each_with_index do |roll_percent, i|
       roll_percentages[i] = roll_percent / 100
     end
-            
-    rolls_for_game = Roll.where("game_id = (?)", game_number).order("created_at DESC")
-    
-    rolls_for_game.each do |roll|
+  end
+
+  def self.get_game_stats(game_numbers)
+    expected = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    actual = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    roll_percentages = Roll.get_roll_percentages
+    rolls_for_games = Roll.where(game_id: game_numbers).order("created_at DESC")
+
+    rolls_for_games.each do |roll|
       actual[roll.total - 2] += 1
     end
-    
-    
-    total_number_of_rolls = rolls_for_game.count
+
+    total_number_of_rolls = rolls_for_games.count
     for i in 0..10
       expected[i] = (roll_percentages[i] * total_number_of_rolls).round(2)
     end
-    
-    
-    return actual, expected, rolls_for_game
+
+
+    return actual, expected
   end
 end
