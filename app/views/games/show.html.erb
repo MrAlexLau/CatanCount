@@ -45,6 +45,10 @@
 
 	  <div id="chart" style="width:95%; padding-left: 10px"></div>
 
+	  <div id="undo-container">
+			<%= link_to "Undo last roll?", undo_last_roll_path(@game), method: :delete, id: "undo-last-roll", :class => 'btn btn-danger', remote: true %>
+		</div>
+
 		<div id='recent-rolls-div'>
 			<div id='recent-rolls-header'>
 				<%= pluralize @game.rolls.count, 'roll' %> for this game:
@@ -59,8 +63,6 @@
 					<% end %>
 				<% end %>
 			</div>
-
-			<%= link_to "Undo last roll?", undo_last_roll_path(@game), method: :delete, id: "undo-last-roll", :class => 'btn btn-danger', remote: true %>
 		</div>
 
 
