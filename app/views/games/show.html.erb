@@ -8,98 +8,61 @@
 		<%#= javascript_include_tag "application" %><%= csrf_meta_tags %>
 		<script type="text/javascript">
 			$(document).ready(function(){
-	   		$('#myStopwatch').stopwatch('theme-1'); //show stopwatch
+				expectedSeries = <%= raw @expected_series.to_json %>;
+				actualSeries = <%= raw @actual_series.to_json %>;
 
-				$(".next_page").html("Older >");
-				$(".previous_page").html("< Newer");
-				var s1 = <%= raw @expected_series.to_json %>;
-				var s2 = <%= raw @actual_series.to_json %>;
-						
-				drawChart(
-          <%= @actual_series %>,
-          <%= @expected_series %>
-        ); 
-		});
+				chart = drawChart(
+          actualSeries,
+          expectedSeries
+        );
+
+        <% if @game.rolls.count < 1 %>
+					$('#recent-rolls-div').hide();
+				<% end %>
+			});
 		</script>
 	</head>
 	<body>
-					<%= render :file => 'layouts/main_menu' %>
-					
-		<h1>
-			Game name: <%= raw @game.game_name %>
-		</h1>
+		<% content_for :main_menu do %>
+			<%= render :file => 'layouts/main_menu' %>
+		<% end %>
+
+		<% if @game.rolls.count < 1 %>
+			<div id="enter-dice-roll">
+				Enter dice roll:
+			</div>
+		<% end %>
+		<div class="row">
+      <div class="col-sm-11">
+      	<% for i in 2..12 %>
+      		<% css_class = i == 2 ? 'col-sm-1 col-sm-offset-1' : 'col-sm-1' %>
+	        <div class="<%= css_class %>">
+						<%= link_to i.to_s, game_rolls_path(@game, :value => i), method: :post, class: "btn btn-info btn-large dice-roll", remote: true, data: { value: i } %>
+	        </div>
+   			<% end %>
+      </div>
+    </div> <!-- end dice roll buttons row -->
+
 	  <div id="chart" style="width:95%; padding-left: 10px"></div>
-		<p>
-			Add another dice roll:<br>
-		</p>
-		
-		<div style="min-height:20px;">
-		<%= form_for(@game, :url => { :action => "add_roll" }) do %>
 
-		<div class="roll_button_div">
-			<input name="two_button" class="roll_button_odd" type="submit" value="2">
-		</div>
-		<div class="roll_button_div">
-			<input name="three_button" class="roll_button_even" type="submit" value="3">
-		</div>
-		<div class="roll_button_div">
-			<input name="four_button" class="roll_button_odd" type="submit" value="4">
-		</div>
-		<div class="roll_button_div">
-			<input name="five_button" class="roll_button_even" type="submit" value="5">
-		</div>
-		<div class="roll_button_div">
-			<input name="six_button" class="roll_button_odd" type="submit" value="6">
-		</div>
-		<div class="roll_button_div">
-			<input name="seven_button" class="roll_button_even" type="submit" value="7">
-		</div>
-		<div class="roll_button_div">
-			<input name="eight_button" class="roll_button_odd" type="submit" value="8">
-		</div>
-		<div class="roll_button_div">
-			<input name="nine_button" class="roll_button_even" type="submit" value="9">
-		</div>
-		<div class="roll_button_div">
-			<input name="ten_button" class="roll_button_odd" type="submit" value="10">
-		</div>
-		<div class="roll_button_div">
-			<input name="eleven_button" class="roll_button_even" type="submit" value="11">
-		</div>
-		<div class="roll_button_div">
-			<input name="twelve_button" class="roll_button_odd" type="submit" value="12">
-		</div>
-		<% end %>
-		</div>
-		
-		<% if @rolls.length > 0 %>
-		<p>
-			<br>
-			<b><%= @game.rolls.count %></b> total rolls for this game. Recent rolls:
-		</p>
-		<table>
-			<tr>
-				<% @rolls.each do |roll| %>
-				<td class="roll_table_cell left_padded">
-					<%= roll.total %>
-				</td>
-				<td class="delete_roll">
-					<%= link_to image_tag('delete.png', :height => '23',:class => 'delete_roll'), game_roll_path(@game, roll), method: :delete %>
-				</td>
+		<div id='recent-rolls-div'>
+			<div id='recent-rolls-header'>
+				<%= pluralize @game.rolls.count, 'roll' %> for this game:
+			</div>
+			<div id='rolls-history'>
+				<% @game.rolls.each do |roll| %>
+
+					<% if roll != @game.rolls.last %>
+						<%= roll.total %>,
+					<% else %>
+						<%= roll.total %>
+					<% end %>
 				<% end %>
-			</tr>
-		</table>
+			</div>
 
-		<% if @game.rolls.length > 5 %>
-			<p>
-				<br/>
-				 View more rolls: <%= will_paginate @rolls %> 	
-			</p>
-		<% end %>
-		<% end %>
-		<br />
-		<br />
-		<div id="myStopwatch"></div>
+			<%= link_to "Undo last roll?", undo_last_roll_path(@game), method: :delete, id: "undo-last-roll", :class => 'btn btn-danger', remote: true %>
+		</div>
+
 
 	</body>
 </html>

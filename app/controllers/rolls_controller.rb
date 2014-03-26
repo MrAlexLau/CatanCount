@@ -37,45 +37,25 @@ class RollsController < ApplicationController
     end
   end
   
-  # GET /rolls/overview
-  def overview
-    @game_id = session[:game_id]
-    
-    @actual_series, @expected_series = Roll.get_game_stats(@game_id)
-    
-    @rolls = Roll.where("game_id = (?)", @game_id).paginate(:page => params[:page], :per_page => 5).order("created_at DESC")
-    #@rolls = @rolls
-    
-    @roll = Roll.new
-    @roll.game_id = @game_id
-    
-
-    respond_to do |format|
-      format.html # overview.html.erb
-    end
-  end
-
-  # GET /rolls/1/edit
-  def edit
-    @roll = Roll.find(params[:id])
-  end
-
   # POST /rolls
   # POST /rolls.json
   def create
-    @roll = Roll.new(params[:roll])
-
-    @roll.game_id = session[:game_id]
+    @roll = Roll.new
+    @roll.total = params['value']
+    @roll.game_id = params[:game_id]
+    @roll.save
     
-    respond_to do |format|
-      if @roll.save
-        format.html { redirect_to rolls_overview_path, notice: 'Roll was successfully created.' }
-        format.json { render json: rolls_overview_path, status: :created, location: @roll }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @roll.errors, status: :unprocessable_entity }
-      end
-    end
+    # respond_to do |format|
+    #   if @roll.save
+    #     format.html { redirect_to rolls_overview_path, notice: 'Roll was successfully created.' }
+    #     format.json { render json: rolls_overview_path, status: :created, location: @roll }
+    #   else
+    #     format.html { render action: "new" }
+    #     format.json { render json: @roll.errors, status: :unprocessable_entity }
+    #   end
+    # end
+
+    redirect_to @game
   end
 
   # PUT /rolls/1

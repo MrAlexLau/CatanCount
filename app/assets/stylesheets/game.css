@@ -1,0 +1,24 @@
+.dice-roll{
+  width: 50px;
+  margin: 10px;
+}
+
+.dice-roll > h3{
+  margin-top: 10px;
+}
+
+.delete-roll .glyphicon {
+  color: #c7254e;
+}
+
+.game-title {
+  text-align: center;
+}
+
+.rolls-count {
+  font-weight: bold;
+}
+
+.jqplot-yaxis{
+  padding-right: 15px;
+}

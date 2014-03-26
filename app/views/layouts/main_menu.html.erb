@@ -1,7 +1,25 @@
-<% if current_user and current_user.is_guest? %>
-    You are currently signed in as a guest.
-		<%= link_to "Go Back?", signout_path %> 	
-<% elsif current_user %>
-  Welcome, <%= current_user.name %>
-	<%= link_to "Sign Out", signout_path %>
-<% end %>
+<nav class="navbar navbar-default" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <a class="navbar-brand" href="<%= root_path %>">Catan Count</a>
+    <ul class="nav navbar-nav">
+      <li><%= link_to "New Game", games_path, method: :post %></li>
+
+      <% if current_user && !current_user.is_guest? %>
+        <li><%= link_to "My Games", games_path %></li>
+
+        <li><%= link_to "Sign Out", signout_path %></li>
+      <% else %>
+        <%# not logged in %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "Facebook", "/auth/facebook" %></li>
+            <li><%= link_to "Google", "/auth/google_oauth2" %></li>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>
+

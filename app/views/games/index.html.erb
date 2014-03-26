@@ -1,19 +1,11 @@
-<%= render :file => 'layouts/main_menu' %>
-
-<h1>Your recent games:</h1>
-
-<table>
-  <tr>
-    <th>Game name</th>
-  </tr>
-
-<% @games.each do |game| %>
-  <tr>
-    <td><%= link_to game.game_name, game %></td>
-  </tr>
+<% content_for :main_menu do %>
+  <%= render :file => 'layouts/main_menu' %>
 <% end %>
-</table>
 
-<br />
-
-<%= link_to 'New Game', new_game_path %>
+<ul>
+  <% @games.each do |game| %>
+    <li>
+      <%= link_to game.game_name, game %>
+    </li>
+  <% end %>
+</ul>

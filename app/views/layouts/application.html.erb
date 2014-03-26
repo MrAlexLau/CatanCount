@@ -7,6 +7,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+
+<%= yield(:main_menu) if content_for?(:main_menu) %>
+
+
+<div class="main-content">
 	<%= yield %>
+</div>
+
 </body>
 </html> 
